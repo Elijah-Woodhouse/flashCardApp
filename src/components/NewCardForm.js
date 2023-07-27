@@ -1,47 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-export default function NewCardForm({ onChange, onSubmit, onAddCard }) {
-  const [newCardFormData, setNewCardFormData] = useState({
-    title: '',
-    body: '',
-    text: '',
-  });
+export default function NewCardForm({ onChange, onSubmit, formData }) {
 
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setNewCardFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Validate the form data if needed
-    // For simplicity, we'll assume the data is valid
-
-    // Create a new card object with the form data
-    const newCard = {
-      title: newCardFormData.title,
-      body: newCardFormData.body,
-      text: newCardFormData.text,
-    };
-
-    // Pass the new card data back to the parent component (App) using the onAddCard prop
-    onAddCard(newCard);
-
-    // Clear the form input fields after submission
-    setNewCardFormData({
-      title: '',
-      body: '',
-      text: '',
-    });
-  };
 
   return (
     <div className='form-container'>
       <h2 className="form-title">New Card Form</h2>
-      <form className='form' onSubmit={handleSubmit}>
+      <form className='form' onSubmit={onSubmit}>
         <div className='inputs'>
           <label htmlFor="title">Title:</label>
           <input
@@ -49,8 +14,8 @@ export default function NewCardForm({ onChange, onSubmit, onAddCard }) {
             type="text"
             id="title"
             name="title"
-            value={newCardFormData.title}
-            onChange={handleFormChange}
+            value={formData.title}
+            onChange={onChange}
             required
           />
         </div>
@@ -61,8 +26,8 @@ export default function NewCardForm({ onChange, onSubmit, onAddCard }) {
             type="text"
             id="body"
             name="body"
-            value={newCardFormData.body}
-            onChange={handleFormChange}
+            value={formData.body}
+            onChange={onChange}
             required
           />
         </div>
@@ -73,8 +38,8 @@ export default function NewCardForm({ onChange, onSubmit, onAddCard }) {
             type="text"
             id="text"
             name="text"
-            value={newCardFormData.text}
-            onChange={handleFormChange}
+            value={formData.text}
+            onChange={onChange}
             required
           />
         </div>

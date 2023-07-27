@@ -3,16 +3,17 @@ import Card from './components/Card';
 import Page from './components/Page';
 import NewCardForm from './components/NewCardForm';
 import { card_content } from './content/card_content';
-import FeedbackMessage from './components/FeedbackMessage';
+import TrueMessage from './components/TrueMessage';
+import FalseMessage from './components/FalseMessage';
 
 function App() {
   const [shuffledCards, setShuffledCards] = useState(card_content);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [currentCardText, setCurrentCardText] = useState("");
   const [userInput, setUserInput] = useState("");
-  const [isCorrect, setIsCorrect] = useState(true);
   const [showCard, setShowCard] = useState(true);
-  const [showMessage, setShowMessage] = useState(true);
+  const [showMessage, setShowMessage] = useState(null);
+  const [ textMatch, setTextMatch ] = useState();
   const [newCardFormData, setNewCardFormData] = useState({
     title: '',
     body: '',
@@ -33,6 +34,10 @@ function App() {
     localStorage.setItem('card_content', JSON.stringify(shuffledCards));
   }, [shuffledCards]);
 
+  const checkEquality = () => {
+    setTextMatch(currentCardText === userInput)
+  }
+
   const shuffleCards = () => {
     // Create a copy of the initialCardContent array and shuffle it randomly
     const shuffled = [...initialCardContent].sort(() => Math.random() - 0.5);
@@ -49,7 +54,6 @@ function App() {
       { ...newCard, id: shuffledCards.length + 1 },
     ];
 
-    // Shuffle the updated card_content array
     const shuffled = updatedCardContent.sort(() => Math.random() - 0.5);
     setShuffledCards(shuffled);
   };
@@ -59,7 +63,6 @@ function App() {
       setCurrentCardIndex((prevIndex) => prevIndex + 1);
       setCurrentCardText(shuffledCards[currentCardIndex + 1].text); // Update current card text
     } else {
-      // If there are no more cards left, reshuffle the cards
       shuffleCards();
     }
   };
@@ -69,21 +72,13 @@ function App() {
   };
 
   const handleSubmit = () => {
-    // Compare the user input with the current card text
-    if (userInput === currentCardText) {
-      setIsCorrect(true);
-    } else {
-      setIsCorrect(false);
-    };
+    checkEquality();
     setShowMessage(true);
-
-    // Delay hiding the message for a few seconds (e.g., 2 seconds)
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 2000);
-
-    // Clear the input field
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 2000);
     setUserInput("");
+    handleNextCard();
   };
 
   const handleNewCardFormChange = (e) => {
@@ -96,25 +91,18 @@ function App() {
 
   const handleNewCardFormSubmit = (event) => {
     event.preventDefault();
-    // Validate the form data if needed
-    // For simplicity, we'll assume the data is valid
-
-    // Create a new card object with the form data
     const newCard = {
       title: newCardFormData.title,
       body: newCardFormData.body,
       text: newCardFormData.text,
     };
-
-    // Pass the new card data back to the parent component (App) using the onAddCard prop
     addNewCard(newCard);
-
-    // Clear the form input fields after submission
     setNewCardFormData({
       title: '',
       body: '',
       text: '',
     });
+
   };
 
   return (
@@ -123,15 +111,11 @@ function App() {
         <h2 className="homepage-title">FlashCard App! What's up</h2>
       </header>
       <div>
-        {showMessage ? <FeedbackMessage isCorrect={isCorrect} /> : null}
+        {textMatch ? <TrueMessage /> : <FalseMessage/>}
         {shuffledCards.length > 0 && (
           <Card
-            onNext={handleNextCard}
             showCard={showCard}
             item={shuffledCards[currentCardIndex]}
-            userInput={userInput}
-            onInputChange={handleUserInput}
-            onSubmit={handleSubmit}
           />
         )}
       </div>
@@ -140,8 +124,8 @@ function App() {
             type="text"
             className="card-input"
             placeholder="Enter the text here..."
-            value="user_input"
-            onChange={(e) => handleUserInput(e.target.value)}
+            value={userInput}
+            onChange={handleUserInput}
           />
           <button className="card-button" onClick={handleSubmit}>
             Submit

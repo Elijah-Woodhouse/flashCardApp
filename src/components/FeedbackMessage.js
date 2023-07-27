@@ -1,12 +1,17 @@
-import { React } from 'react';
+import { React, useEffect, useState } from 'react';
 
-export default function FeedbackMessage(isCorrect) {
+export default function FeedbackMessage(textMatch) {
+  const [textState, setTextState] = useState()
+
+  useEffect(() => {
+    setTextState(textMatch)
+  }, []);
 
     
 
     return (
-        <div>
-          {isCorrect ? (
+        <>
+          {textMatch ? (
             <div className="correct-element">
               <h1>Correct!</h1>
             </div>
@@ -15,6 +20,6 @@ export default function FeedbackMessage(isCorrect) {
               <h1>Nope!</h1>
             </div>
           )}
-        </div>
+        </>
       );
 }
