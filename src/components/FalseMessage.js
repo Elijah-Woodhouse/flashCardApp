@@ -12,7 +12,7 @@ export default function FeedbackMessage(textMatch) {
         return () => {
         clearTimeout(timer);
         };
-    }, []);
+    }, [textMatch]);
 
     return (
 

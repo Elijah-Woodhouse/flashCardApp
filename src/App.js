@@ -83,8 +83,8 @@ function App() {
     checkEquality();
     setShowMessage(true);
       setTimeout(() => {
-        setShowMessage(false);
-      }, 2000);
+        setShowMessage(null);
+      }, 100);
     setUserInput("");
     handleNextCard();
   };
@@ -119,7 +119,7 @@ function App() {
         <h2 className="homepage-title">FlashCard App! What's up</h2>
       </header>
       <div>
-        {textMatch ? <TrueMessage textMatch={textMatch}/> : <FalseMessage textMatch={textMatch}/>}
+        {showMessage ? renderedComponent : null}
         {shuffledCards.length > 0 && (
           <Card
             showCard={showCard}
