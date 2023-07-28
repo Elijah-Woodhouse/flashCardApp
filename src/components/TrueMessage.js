@@ -7,7 +7,7 @@ export default function FeedbackMessage(textMatch) {
     useEffect(() => {
         const timer = setTimeout(() => {
         setIsVisible(false);
-        }, 1000);
+        }, 3000);
 
         return () => {
         clearTimeout(timer);

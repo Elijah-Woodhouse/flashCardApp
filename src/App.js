@@ -28,6 +28,11 @@ function App() {
     renderedComponent = <FalseMessage/>
   }
 
+  const clearStorage = () => {
+    localStorage.clear();
+  
+  }
+
   // Check if there is data in localStorage, if not, use the default data
   const initialCardContent = JSON.parse(localStorage.getItem('card_content')) || card_content;
 
@@ -84,7 +89,7 @@ function App() {
     setShowMessage(true);
       setTimeout(() => {
         setShowMessage(null);
-      }, 100);
+      }, 1000);
     setUserInput("");
     handleNextCard();
   };
@@ -118,6 +123,7 @@ function App() {
       <header className="App-header">
         <h2 className="homepage-title">FlashCard App! What's up</h2>
       </header>
+      <Page />
       <div>
         {showMessage ? renderedComponent : null}
         {shuffledCards.length > 0 && (
@@ -139,12 +145,12 @@ function App() {
             Submit
           </button>
         </div>
-      <Page />
       <NewCardForm
         formData={newCardFormData}
         onChange={handleNewCardFormChange}
         onSubmit={handleNewCardFormSubmit}
       />
+      <button className="oppenheimer-button" onClick={clearStorage}>Clean Storage. Start Anew. Become Reborn</button>
     </div>
   );
 }
