@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Card({ handleUserInput, showCard, onNext, item: { title, body, text } }) {
-  const [userInput, setUserInput] = useState();
+export default function Card({showCard, item: { title, body, text } }) {
 
   return (
     // Wrap the JSX inside parentheses

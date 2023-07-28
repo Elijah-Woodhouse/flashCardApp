@@ -1,10 +1,22 @@
-import { React } from 'react';
+import { React, useState, useEffect } from 'react';
 
-export default function FeedbackMessage() {
+export default function FeedbackMessage(textMatch) {
+
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+        setIsVisible(false);
+        }, 1000);
+
+        return () => {
+        clearTimeout(timer);
+        };
+    }, []);
 
     return (
 
-        <div className="false-element">
+        <div className={isVisible ? 'false-element' : 'false-element hidden'}>
             <h1>Nope!</h1>
         </div>
       );

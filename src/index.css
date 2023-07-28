@@ -20,8 +20,8 @@
   padding: 20px;
   font-size: 24px;
   border-radius: 8px;
-  /* opacity: 0; */
-  /* transition: opacity 0.5s ease-in-out; */
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .false-element {
@@ -34,8 +34,16 @@
   padding: 20px;
   font-size: 24px;
   border-radius: 8px;
-  /* opacity: 0; */
-  /*transition: opacity 0.5s ease-in-out;*/
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.correct-element.hidden {
+  opacity: 0;
+}
+
+.false-element.hidden {
+  opacity: 0;
 }
 
 .card-container.hidden {
@@ -43,13 +51,6 @@
   pointer-events: none;
 }
 
-.correct-element.fade-in {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-.correct-element.fade-out {
-  animation: fadeOut 0.5s ease-in-out;
-}
 
 @keyframes fadeIn {
   from {

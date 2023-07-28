@@ -20,6 +20,14 @@ function App() {
     text: '',
   });
 
+
+  let renderedComponent;
+  if (textMatch) {
+    renderedComponent = <TrueMessage/>
+  } else {
+    renderedComponent = <FalseMessage/>
+  }
+
   // Check if there is data in localStorage, if not, use the default data
   const initialCardContent = JSON.parse(localStorage.getItem('card_content')) || card_content;
 
@@ -111,7 +119,7 @@ function App() {
         <h2 className="homepage-title">FlashCard App! What's up</h2>
       </header>
       <div>
-        {textMatch ? <TrueMessage /> : <FalseMessage/>}
+        {textMatch ? <TrueMessage textMatch={textMatch}/> : <FalseMessage textMatch={textMatch}/>}
         {shuffledCards.length > 0 && (
           <Card
             showCard={showCard}
